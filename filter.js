@@ -47,8 +47,7 @@ $(document).ready(function () {
     If the output is true, it means that the element made it through the filters
     */
     function filter(elements, pipeline) {
-        if (!pipeline)
-        {
+        if (!pipeline) {
             return elements
         }
         const result = [];
@@ -68,13 +67,39 @@ $(document).ready(function () {
                     return false; // Return false if there's an error
                 }
             });
-            if (allTrue){
+            if (allTrue) {
                 result.push(elt)
             }
         }
         return result
     }
 
+    /*
+    Transform a html div (a subdivision of a module) into a string
+    */
+    function divToString(div) {
+        if (div.data("type") === "number") {
+            return parseInt(div.data("value"))
+        }
+        return div.data("value")
+    }
+
+    /*
+    Transform a html module into an eval string
+    */
+    function moduleToString($module) {
+        let string = "";
+        const $children = $module.children();
+
+        $children.each(function() {
+            string += divToString($(this)) + " ";
+        });
+        return string
+    }
+
+    const $testModule = $('#test-module');
+    const evalTest = moduleToString($testModule)
+    console.log(evalTest)
+    console.log(eval(evalTest))
     const filterTest = filter(elements, pipeline)
-    console.log(filterTest)
 });
