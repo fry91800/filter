@@ -3,7 +3,9 @@
     margin: 0;
     font-family: 'Arial', sans-serif !important;
 }
-html, body {
+
+html,
+body {
     height: 100%;
     margin: 0;
 }
@@ -27,6 +29,7 @@ html, body {
     width: 20%;
     background-color: rgb(0, 255, 13);
 }
+
 #items-list {
     max-height: 100%;
     overflow-y: scroll;
@@ -41,45 +44,55 @@ html, body {
     padding-bottom: 5px;
 }
 
-.item, .eval-element{
+.item,
+.eval-element {
     border: solid 3px black;
     border-radius: 4px;
     padding: 2px 5px;
     width: fit-content;
     background-color: yellow;
     height: fit-content;
-    margin:3px;
+    margin: 3px;
 }
-.item{
+
+.eval-element{
+    position: relative;
+}
+
+.item {
     cursor: grab;
 }
+
 .item.ui-draggable-dragging {
     cursor: grabbing;
 }
 
 /* Right side layout */
-#right-panel{
-    flex:1;
+#right-panel {
+    flex: 1;
     display: flex;
     background-color: blueviolet;
     flex-direction: column;
 }
+
 /* Filters */
 #filters {
-    flex:1;
+    flex: 1;
     background-color: rgb(255, 187, 0);
     height: 300px;
     display: flex;
     flex-wrap: wrap;
 }
-#filters-title{
+
+#filters-title {
     font-size: 50px;
     text-align: center;
 }
-.filter{
-    width:fit-content;
+
+.filter {
+    width: fit-content;
     height: fit-content;
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     min-height: 100px;
     min-width: 100px;
@@ -88,8 +101,9 @@ html, body {
     transition: all 0.5s ease-in-out;
     transition: width 2s;
 }
-.filter-wrapper{
-    position:relative;
+
+.filter-wrapper {
+    position: relative;
     background-color: red;
     font-size: 20px;
     margin: 20px;
@@ -100,21 +114,33 @@ html, body {
     width: fit-content;
 }
 
-.delete-filter{
+.delete-filter {
     position: absolute;
-    top:0px;
-    right:0px;
+    top: 0px;
+    right: 0px;
 }
 
-.filter-name{
+.filter-name {
     text-align: center;
 }
 
-.delete-eval-element, .delete-filter{
+.edit-input{
+    max-width:100px;
+}
+
+.delete-eval-element,
+.delete-filter {
     cursor: pointer;
-    }
+}
+
+.delete-eval-element{
+    position:absolute;
+    top:-10px;
+    right:-3px;
+}
+
 /* Results */
-#results{
+#results {
     background-color: brown;
     height: 100%;
     width: 100%;
