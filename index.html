@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filter page</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="filter.js"></script>
 </head>
+
 <body>
-    <h1>Filters</h1>
-    <div id="test-module" class="module">
-        <div class="eval-element" data-type="number" data-value="5">
-            5
+    <div id="app">
+        <div id="items">
+            <div id="items-title" class="title">
+                Items
+            </div>
+            <div id="items-list">
+                Variables
+                <div class="item" data-type="variable" data-value="galactic_latitude">
+                    galactic_latitude
+                </div>
+                Comparison
+                <div class="item" data-type="comparison" data-value=">">
+                    >
+                </div>
+                Type
+                <div class="item" data-type="number" data-value="0">
+                    Number
+                </div>
+            </div>
+
         </div>
-        <div class="eval-element" data-type="operator" data-value="+">
-            +
-        </div>
-        <div class="eval-element" data-type="number" data-value="3">
-            3
-        </div>
-        <div class="eval-element" data-type="comparison" data-value="===">
-            =
-        </div>
-        <div class="eval-element" data-type="number" data-value="8">
-            8
+        <div id="right-panel">
+            <div id="filter-panel">
+                <div id="filters-title">
+                    Filters
+                </div>
+                <div id="filters">
+                    <div id="filter-maker">
+                        add
+                    </div>
+                    <div id="run">
+                        Run
+                    </div>
+                </div>
+            </div>
+            <div id="results">
+            </div>
         </div>
     </div>
-    <script src="filter.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,82 @@
 $(document).ready(function () {
     /*
+    Piece of code to add and delete filters every filter has a unique identifier to
+    help destoy it later using the delete filter button
+    */
+    let filterCount = 0
+    let evalElementCount = 0
+    $("#filter-maker").on("click", function () {
+        filterCount = filterCount + 1;
+        const newFilter = `<div id="filter-wrapper${filterCount}" class="filter-wrapper">
+                        <div id="delete-filter${filterCount}" class="delete-filter" data-target="filter-wrapper${filterCount}">
+                            x
+                        </div>
+                        <div class="filter-name">
+                            New Filter
+                        </div>
+                        <div id="test-module" class="filter">
+                        </div>
+                    </div>`
+        $("#filters").append(newFilter);
+
+        $(`#delete-filter${filterCount}`).on("click", function () {
+            const targetId = $(this).data("target");
+            $(`#${targetId}`).remove();
+        });
+
+        // Make the newly created filter a droppable area to drop items
+        $(".filter").droppable({
+            accept: ".item",
+            over: function (event, ui) {
+                $(this).css("background-color", "blue");
+            },
+            drop: function (event, ui) {
+
+                evalElementCount = evalElementCount + 1;
+                // Get the dragged element (clone)
+                const droppedElement = ui.helper[0];
+                // Reset the position to make it stick to the new parent
+                $(droppedElement).css({
+                    position: 'relative',
+                    top: 'auto',
+                    left: 'auto'
+                });
+                // Change it from item to eval-element for future processing
+                $(droppedElement).toggleClass("item")
+                $(droppedElement).toggleClass("eval-element")
+                $(droppedElement).attr('id', `eval-element${evalElementCount}`);
+                if ($(droppedElement).data("type") === "number") {
+                    $(droppedElement).text("0")
+                }
+                $(droppedElement).append(`
+                <div id="delete-eval-element${evalElementCount}" class="delete-eval-element" data-target="eval-element${evalElementCount}">
+                   x
+                </div>`)
+                // Append the dropped element to the filter, wasn't working without taking outerHTML room for improvement 
+                $(this).append(droppedElement.outerHTML);
+
+                $(`#delete-eval-element${evalElementCount}`).on("click", function () {
+                    console.log("test")
+                    const targetId = $(this).data("target");
+                    $(`#${targetId}`).remove();
+                });
+                // // Same, can't change that before dropping the element, doing it after
+                // $('.eval-element').on("click", function () {
+                //     $(this).remove();
+                // });
+            }
+        });
+    })
+    /*
+    Make items draggable
+    */
+    $(".item").draggable({
+        appendTo: 'body', // Append to the body.
+        zIndex: 2,
+        containment: $('document'),
+        helper: 'clone'
+    });
+    /*
     This is the example from the mail
     */
     const elements = [
@@ -35,11 +112,7 @@ $(document).ready(function () {
     /*
     The pipeline, each element correspond to a filter (as a string, to use with javasctipt eval() function)
     */
-    const pipeline = [
-        "rb >= 0.8 || drb >= 0.8",
-        "Math.abs(galactic_latitude) > 10",
-        "jd - jdstarthist < 7"
-    ];
+    const pipeline = [];
 
 
     /*
@@ -85,21 +158,38 @@ $(document).ready(function () {
     }
 
     /*
-    Transform a html module into an eval string
+    Transform a html filter into an eval string
     */
-    function moduleToString($module) {
+    function filterToString($filter) {
         let string = "";
-        const $children = $module.children();
+        const $children = $filter.children();
 
-        $children.each(function() {
+        $children.each(function () {
             string += divToString($(this)) + " ";
         });
-        return string
+        return string.trim()
     }
 
+    /*
+    Filter to pipeline function
+    */
+    function filtersToPipeline() {
+        const pipeline = []
+        $(".filter").each(function () {
+            const str = filterToString($(this))
+            if (str && str != "")
+                pipeline.push(str)
+        });
+        return pipeline
+    }
+
+    $("#run").on("click", function () {
+        const pipeline = filtersToPipeline();
+        console.log(pipeline);
+    });
     const $testModule = $('#test-module');
-    const evalTest = moduleToString($testModule)
-    console.log(evalTest)
-    console.log(eval(evalTest))
+    const evalTest = filterToString($testModule)
+    pipeline.push(evalTest)
     const filterTest = filter(elements, pipeline)
+    console.log(filterTest)
 });
