@@ -10,7 +10,7 @@ $(document).ready(function () {
         </div>
         <div id ="filter-name${identifier}" class="filter-name">
             <span class="text">New filter</span>
-            <input type="text" class="edit-input hidden" value="New filter"/>
+            <input type="text" class="edit-input hidden" maxlength="13" value="New filter"/>
         </div>
         <div id="filter-${identifier}" class="filter" data-identifier="${identifier}">
         </div>
@@ -73,9 +73,14 @@ $(document).ready(function () {
         $(".filter").droppable({
             accept: ".item",
             over: function (event, ui) {
-                //$(this).css("background-color", "blue");
+                $(this).css("border", "2px dashed grey");
+            },
+            out: function (event, ui) {
+                // Action when the item leaves the droppable area (not over anymore)
+                $(this).css("border", "2px solid transparent");
             },
             drop: function (event, ui) {
+                $(this).css("border", "2px solid transparent");
                 const filterIdentifier = $(this).data("identifier");
                 const evalCount = countEvals($(this));
                 if (evalCount >= 15) {
