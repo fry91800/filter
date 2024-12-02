@@ -15,6 +15,7 @@
 
 <body>
     <div id="main-bar">
+        <span id="main-bar-title">Filter Maker</span>
     </div>
     <div id="app">
         <div id="items">
@@ -22,19 +23,48 @@
                 Items
             </div>
             <div id="items-list">
+
                 <div class="items-group">
                     <span class="item-sub-list-title">Variables</span>
+                    <div class="item" data-type="variable" data-value="rb">
+                        <span class="text">rb</span>
+                    </div>
+                    <div class="item" data-type="variable" data-value="drb">
+                        <span class="text">drb</span>
+                    </div>
                     <div class="item" data-type="variable" data-value="galactic_latitude">
                         <span class="text">galactic_latitude</span>
                     </div>
+                    <div class="item" data-type="variable" data-value="jd">
+                        <span class="text">jd</span>
+                    </div>
+                    <div class="item" data-type="variable" data-value="jdstarthist">
+                        <span class="text">jdstarthist</span>
+                    </div>
                 </div>
+
                 <div class="items-group">
-                    <span class="item-sub-list-title">Comparisons</span>
+                    <span class="item-sub-list-title">Comparison Operators</span>
+                    <div class="item" data-type="comparison" data-value="<">
+                        <span class="text"><</span>
+                    </div>
+                    <div class="item" data-type="comparison" data-value="<=">
+                        <span class="text">≤</span>
+                    </div>
                     <div class="item" data-type="comparison" data-value=">">
                         <span class="text">></span>
                     </div>
-
+                    <div class="item" data-type="comparison" data-value=">=">
+                        <span class="text">≥</span>
+                    </div>
+                    <div class="item" data-type="comparison" data-value="===">
+                        <span class="text">=</span>
+                    </div>
+                    <div class="item" data-type="comparison" data-value="!==">
+                        <span class="text">≠</span>
+                    </div>
                 </div>
+
                 <div class="items-group">
                     <span class="item-sub-list-title">Types</span>
                     <div class="item" data-type="number" data-value="0">
@@ -42,6 +72,32 @@
                         <input type="number" class="edit-input hidden" value="0" />
                     </div>
                 </div>
+
+                <div class="items-group">
+                    <span class="item-sub-list-title">Operators</span>
+                    <div class="item" data-type="operator" data-value="+">
+                        <span class="text">+</span>
+                    </div>
+                    <div class="item" data-type="operator" data-value="-">
+                        <span class="text">-</span>
+                    </div>
+                    <div class="item" data-type="operator" data-value="*">
+                        <span class="text">&times;</span>
+                    </div>
+                    <div class="item" data-type="operator" data-value="/">
+                        <span class="text">&divide;</span>
+                    </div>
+                </div>
+                <div class="items-group">
+                    <span class="item-sub-list-title">Logical Operators</span>
+                    <div class="item" data-type="logic" data-value="&&">
+                        <span class="text">AND</span>
+                    </div>
+                    <div class="item" data-type="logic" data-value="||">
+                        <span class="text">OR</span>
+                    </div>
+                </div>
+
             </div>
 
         </div>

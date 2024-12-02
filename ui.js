@@ -42,7 +42,7 @@ $(document).ready(function () {
         $(`#${base}${identifier}`).find('.edit-input').on('keypress', function (e) {
             if (e.which === 13) {
                 const newInput = $(this).parent().find('.edit-input').val();
-                if($(this).parent().data("type") === "number" && isNaN(parseInt(newInput))){
+                if($(this).parent().data("type") === "number" && isNaN(parseFloat(newInput))){
                     return
                 }
                 $(this).parent().find('.text').text(newInput)

@@ -72,7 +72,7 @@ Transform a html div (a subdivision of a module) into a string
 */
 function divToString(div) {
     if (div.data("type") === "number") {
-        return parseInt(div.data("value"))
+        return parseFloat(div.data("value"))
     }
     return div.data("value")
 }
@@ -123,7 +123,7 @@ function makeResultElement(data){
         res = res + `<div class="result-line"><strong>${key}:</strong> ${data[key]}</div>`;
     }
     res = res + '</div>'
-    return res;
+    return res
 }
 
 $(document).ready(function () {
@@ -132,7 +132,6 @@ $("#run").on("click", function () {
     const result = filter(elements, pipeline)
     $("#output").empty();
     for (elt of result){
-        console.log(elt)
         $("#output").append(makeResultElement(elt))
     }
 });
