@@ -117,22 +117,27 @@ function checkValidity(identifier) {
     return true
 }
 
-function makeResultElement(data){
-    let res = `<div class="result-element">`;
-    for (const key in data){
+function makeResultElement(data) {
+    let res = `<div class="result-element fade-in">`;
+    for (const key in data) {
         res = res + `<div class="result-line"><strong>${key}:</strong> ${data[key]}</div>`;
     }
     res = res + '</div>'
     return res
 }
-
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 $(document).ready(function () {
-$("#run").on("click", function () {
-    const pipeline = filtersToPipeline();
-    const result = filter(elements, pipeline)
-    $("#output").empty();
-    for (elt of result){
-        $("#output").append(makeResultElement(elt))
-    }
-});
+    $("#run").on("click", async function () {
+        const pipeline = filtersToPipeline();
+        const result = filter(elements, pipeline)
+        $("#output").removeClass("visible");
+        await wait(500);
+        $("#output").empty();
+        for (elt of result) {
+            await $("#output").append(makeResultElement(elt))
+        }
+        $("#output").addClass("visible");
+    });
 });
