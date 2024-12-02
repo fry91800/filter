@@ -118,6 +118,11 @@ body {
     width: fit-content;
 }
 
+.filter-wrapper.valid{
+
+    background-color: green;
+}
+
 .delete-filter {
     position: absolute;
     top: 0px;

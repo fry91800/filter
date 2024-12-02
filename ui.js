@@ -2,43 +2,37 @@ $(document).ready(function () {
     /*
     Create a filter element with an id
     */
-    function filterMaker(number) {
+    function filterMaker(identifier) {
         return `
-    <div id="filter-wrapper${number}" class="filter-wrapper">
-        <div id="delete-filter${number}" class="delete-filter" data-target="filter-wrapper${number}">
+    <div id="filter-wrapper${identifier}" class="filter-wrapper valid">
+        <div id="delete-filter${identifier}" class="delete-filter" data-target="filter-wrapper${identifier}">
             x
         </div>
-        <div id ="filter-name${number}">
+        <div id ="filter-name${identifier}">
             <span class="text">New filter</span>
             <input type="text" class="edit-input hidden" value="New filter"/>
         </div>
-        <div id="filter-${number}" class="filter">
+        <div id="filter-${identifier}" class="filter" data-identifier="${identifier}">
         </div>
     </div>`
     }
-    function deleteEvalElementMaker(number) {
+    function deleteEvalElementMaker(identifier, filterIdentifier) {
         return `
-                <div id="delete-eval-element${number}" class="delete-eval-element" data-target="eval-element${number}">
+                <div id="delete-eval-element${identifier}" class="delete-eval-element" data-target="eval-element${identifier}" data-filter-id="${filterIdentifier}">
                    x
                 </div>`
     }
-    function makeFilterNameEditable(filterCount){
-        console.log(filterCount)
-        $(`#filter-name${filterCount}`).find('.text').on('click', function () {
-            $(this).parent().find('.edit-filter-name').toggleClass('hidden')
-            $(this).parent().find('.text').toggleClass('hidden')
-            $(this).parent().find('.edit-filter-name').focus();
-            $(this).parent().find('.edit-filter-name').select();
-        });
-        $(`#filter-name${filterCount}`).find('.edit-filter-name').on('keypress', function (e) {
-            if (e.which === 13) {
-                const newInput = $(this).parent().find('.edit-input').val();
-                $(this).parent().find('.text').text(newInput)
-                $(this).parent().data('value', newInput)
-                $(this).parent().find('.edit-input').toggleClass('hidden')
-                $(this).parent().find('.text').toggleClass('hidden')
-            }
-        });
+    function refreshFilterValidity(identifier)
+    {
+        if (checkValidity(identifier))
+        {
+            $(`#filter-wrapper${identifier}`).addClass('valid')
+            $(`#filter-wrapper${identifier}`).removeClass('invalid')
+        }
+        else{
+            $(`#filter-wrapper${identifier}`).addClass('invalid')
+            $(`#filter-wrapper${identifier}`).removeClass('valid')
+        }
     }
     function makeEditable(base, identifier) {
         $(`#${base}${identifier}`).find('.text').on('click', function () {
@@ -69,7 +63,7 @@ $(document).ready(function () {
         $("#filters").append(newFilter);
         // Step 3: Make the filter name editable
         makeEditable('filter-name', filterCount)
-        // Step 4: activate the delete button to delete it later
+        // Step 4: activate the delete button to delete the filter later
         $(`#delete-filter${filterCount}`).on("click", function () {
             const targetId = $(this).data("target");
             $(`#${targetId}`).remove();
@@ -93,27 +87,35 @@ $(document).ready(function () {
                     top: 'auto',
                     left: 'auto'
                 });
-                // Change it from item to eval-element for future processing
+                const filterIdentifier = $(this).data("identifier");
                 $(droppedElement).toggleClass("item")
                 $(droppedElement).toggleClass("eval-element")
                 $(droppedElement).attr('id', `eval-element${evalElementCount}`);
                 $(droppedElement).attr('data-unique', `${evalElementCount}`);
+                $(droppedElement).attr('data-filter-id', `${evalElementCount}`);
                 if ($(droppedElement).data("type") === "number") {
                     $(droppedElement).find('.text').text("0")
                 }
-                const deleteButton = deleteEvalElementMaker(evalElementCount)
+                // Add the delete button, the filterId is added to it to make it easier to refresh the validity of the filter upon deletion
+                const deleteButton = deleteEvalElementMaker(evalElementCount, filterIdentifier)
                 $(droppedElement).append(deleteButton)
                 // Append the dropped element to the filter, wasn't working without taking outerHTML room for improvement 
                 $(this).append(droppedElement.outerHTML);
 
+                //Make the new filter deletable
                 $(`#delete-eval-element${evalElementCount}`).on("click", function () {
                     const targetId = $(this).data("target");
+                    const filterIdentifier = $(this).data("filter-id")
+                    console.log(filterIdentifier)
                     $(`#${targetId}`).remove();
+                    refreshFilterValidity(filterIdentifier)
                 });
                 // If this is a number, make it editable
                 if ($(`#eval-element${evalElementCount}`).data("type") === "number") {
                     makeEditable('eval-element', evalElementCount);
                 }
+                // Refresh the filter validity
+                refreshFilterValidity(filterCount)
             }
         });
     })
