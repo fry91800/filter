@@ -46,6 +46,7 @@ $(document).ready(function () {
                 $(this).parent().data('value', newInput)
                 $(this).parent().find('.edit-input').toggleClass('hidden')
                 $(this).parent().find('.text').toggleClass('hidden')
+                $(this).parent().find('.delete-eval-element').addClass('hidden')
             }
         });
     }
@@ -69,14 +70,13 @@ $(document).ready(function () {
             $(`#${targetId}`).remove();
         });
         // Step 5: Activate the hovering delete show
-        $(".filter").parent().hover(
+        $(".filter-wrapper").hover(
             function () {
               // Mouse enters the parent
               $(this).find('.delete-filter').removeClass('hidden');
             },
             function () {
               // Mouse leaves the parent
-              console.log("hovering")
               $(this).find('.delete-filter').addClass('hidden');
             }
           );
