@@ -125,6 +125,11 @@ function makeResultElement(data) {
     res = res + '</div>'
     return res
 }
+function makeErrorMessage(){
+    return `<div class="warning">
+    <span class="result-line">One or more filters are not valid. Filters that are not valid are highlighted in red</span>
+    </div>`
+}
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -135,8 +140,13 @@ $(document).ready(function () {
         $("#output").removeClass("visible");
         await wait(500);
         $("#output").empty();
-        for (elt of result) {
-            await $("#output").append(makeResultElement(elt))
+        if (result === false) {
+            $("#output").append(makeErrorMessage())
+        }
+        else {
+            for (elt of result) {
+                await $("#output").append(makeResultElement(elt))
+            }
         }
         $("#output").addClass("visible");
     });
