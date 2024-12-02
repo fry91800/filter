@@ -5,8 +5,8 @@ $(document).ready(function () {
     function filterMaker(identifier) {
         return `
     <div id="filter-wrapper${identifier}" class="filter-wrapper valid">
-        <div id="delete-filter${identifier}" class="delete-filter" data-target="filter-wrapper${identifier}">
-            x
+        <div id="delete-filter${identifier}" class="delete-filter hidden" data-target="filter-wrapper${identifier}">
+            X
         </div>
         <div id ="filter-name${identifier}" class="filter-name">
             <span class="text">New filter</span>
@@ -18,8 +18,8 @@ $(document).ready(function () {
     }
     function deleteEvalElementMaker(identifier, filterIdentifier) {
         return `
-                <div id="delete-eval-element${identifier}" class="delete-eval-element" data-target="eval-element${identifier}" data-filter-id="${filterIdentifier}">
-                   x
+                <div id="delete-eval-element${identifier}" class="delete-eval-element hidden" data-target="eval-element${identifier}" data-filter-id="${filterIdentifier}">
+                   X
                 </div>`
     }
     function refreshFilterValidity(identifier) {
@@ -68,8 +68,19 @@ $(document).ready(function () {
             const targetId = $(this).data("target");
             $(`#${targetId}`).remove();
         });
-
-        // Step 5: Make it droppable to accept items from the list
+        // Step 5: Activate the hovering delete show
+        $(".filter").parent().hover(
+            function () {
+              // Mouse enters the parent
+              $(this).find('.delete-filter').removeClass('hidden');
+            },
+            function () {
+              // Mouse leaves the parent
+              console.log("hovering")
+              $(this).find('.delete-filter').addClass('hidden');
+            }
+          );
+        // Step 6: Make it droppable to accept items from the list
         $(".filter").droppable({
             accept: ".item",
             over: function (event, ui) {
@@ -117,6 +128,18 @@ $(document).ready(function () {
                     $(`#${targetId}`).remove();
                     refreshFilterValidity(filterIdentifier)
                 });
+                // Delete visible only if hovering
+                $(`#eval-element${evalElementCount}`).hover(
+                    function () {
+                      // Mouse enters the parent
+                      $(this).find('.delete-eval-element').removeClass('hidden');
+                    },
+                    function () {
+                      // Mouse leaves the parent
+                      console.log("hovering")
+                      $(this).find('.delete-eval-element').addClass('hidden');
+                    }
+                  );
                 // If this is a number, make it editable
                 if ($(`#eval-element${evalElementCount}`).data("type") === "number") {
                     makeEditable('eval-element', evalElementCount);
