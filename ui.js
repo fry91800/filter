@@ -8,7 +8,7 @@ $(document).ready(function () {
         <div id="delete-filter${identifier}" class="delete-filter" data-target="filter-wrapper${identifier}">
             x
         </div>
-        <div id ="filter-name${identifier}">
+        <div id ="filter-name${identifier}" class="filter-name">
             <span class="text">New filter</span>
             <input type="text" class="edit-input hidden" value="New filter"/>
         </div>
@@ -22,14 +22,12 @@ $(document).ready(function () {
                    x
                 </div>`
     }
-    function refreshFilterValidity(identifier)
-    {
-        if (checkValidity(identifier))
-        {
+    function refreshFilterValidity(identifier) {
+        if (checkValidity(identifier)) {
             $(`#filter-wrapper${identifier}`).addClass('valid')
             $(`#filter-wrapper${identifier}`).removeClass('invalid')
         }
-        else{
+        else {
             $(`#filter-wrapper${identifier}`).addClass('invalid')
             $(`#filter-wrapper${identifier}`).removeClass('valid')
         }
@@ -51,12 +49,14 @@ $(document).ready(function () {
             }
         });
     }
+    function countEvals($this) {
+        return $this.children(".eval-element").length
+    }
     let filterCount = 0
     let evalElementCount = 0
 
     $("#filter-maker").on("click", function () {
         filterCount = filterCount + 1;
-        console.log("New filter made, count: " + filterCount)
         // Step 1: Create the filter
         newFilter = filterMaker(filterCount)
         // Step 2: Add it to the list
@@ -73,12 +73,16 @@ $(document).ready(function () {
         $(".filter").droppable({
             accept: ".item",
             over: function (event, ui) {
-                $(this).css("background-color", "blue");
+                //$(this).css("background-color", "blue");
             },
             drop: function (event, ui) {
-
+                const filterIdentifier = $(this).data("identifier");
+                const evalCount = countEvals($(this));
+                if (evalCount >= 15) {
+                    alert("too much");
+                    return;
+                }
                 evalElementCount = evalElementCount + 1;
-                console.log("New element dropped, count: " + evalElementCount)
                 // Get the dragged element (clone)
                 const droppedElement = ui.helper[0];
                 // Reset the position to make it stick to the new parent
@@ -87,7 +91,6 @@ $(document).ready(function () {
                     top: 'auto',
                     left: 'auto'
                 });
-                const filterIdentifier = $(this).data("identifier");
                 $(droppedElement).toggleClass("item")
                 $(droppedElement).toggleClass("eval-element")
                 $(droppedElement).attr('id', `eval-element${evalElementCount}`);
@@ -106,7 +109,6 @@ $(document).ready(function () {
                 $(`#delete-eval-element${evalElementCount}`).on("click", function () {
                     const targetId = $(this).data("target");
                     const filterIdentifier = $(this).data("filter-id")
-                    console.log(filterIdentifier)
                     $(`#${targetId}`).remove();
                     refreshFilterValidity(filterIdentifier)
                 });
@@ -116,6 +118,13 @@ $(document).ready(function () {
                 }
                 // Refresh the filter validity
                 refreshFilterValidity(filterCount)
+                // Let user set the number
+                if ($(`#eval-element${evalElementCount}`).data("type") === "number") {
+                    $(`#eval-element${evalElementCount}`).find('.edit-input').toggleClass('hidden')
+                    $(`#eval-element${evalElementCount}`).find('.text').toggleClass('hidden')
+                    $(`#eval-element${evalElementCount}`).find('.edit-input').focus();
+                    $(`#eval-element${evalElementCount}`).find('.edit-input').select();
+                }
             }
         });
     })

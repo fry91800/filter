@@ -13,24 +13,33 @@
 </head>
 
 <body>
+    <div id="main-bar">
+    </div>
     <div id="app">
         <div id="items">
             <div id="items-title" class="title">
                 Items
             </div>
             <div id="items-list">
-                Variables
-                <div class="item" data-type="variable" data-value="galactic_latitude">
-                    <span class="text">galactic_latitude</span>
+                <div class="items-group">
+                    <span class="item-sub-list-title">Variables</span>
+                    <div class="item" data-type="variable" data-value="galactic_latitude">
+                        <span class="text">galactic_latitude</span>
+                    </div>
                 </div>
-                Comparison
-                <div class="item" data-type="comparison" data-value=">">
-                    <span class="text">></span>
+                <div class="items-group">
+                    <span class="item-sub-list-title">Comparisons</span>
+                    <div class="item" data-type="comparison" data-value=">">
+                        <span class="text">></span>
+                    </div>
+
                 </div>
-                Type
-                <div class="item" data-type="number" data-value="0">
-                    <span class="text">Number</span>
-                    <input type="number" class="edit-input hidden" value="0"/>
+                <div class="items-group">
+                    <span class="item-sub-list-title">Types</span>
+                    <div class="item" data-type="number" data-value="0">
+                        <span class="text">Number</span>
+                        <input type="number" class="edit-input hidden" value="0" />
+                    </div>
                 </div>
             </div>
 
@@ -40,16 +49,17 @@
                 <div id="filters-title">
                     Filters
                 </div>
+                <div id="filter-maker" class="button">
+                    New
+                </div>
                 <div id="filters">
-                    <div id="filter-maker">
-                        add
-                    </div>
-                    <div id="run">
-                        Run
-                    </div>
                 </div>
             </div>
             <div id="results">
+
+                <div id="run" class="button">
+                    Run
+                </div>
             </div>
         </div>
     </div>

@@ -109,11 +109,8 @@ Check the validity of a single filter
 
 function checkValidity(identifier) {
     const $filter = $(`#filter-${identifier}`)
-    console.log($filter)
     const singleEvalPipeline = [filterToString($filter)]
     const evalResult = filter(elements, singleEvalPipeline)
-    console.log(singleEvalPipeline)
-    console.log(evalResult)
     if (evalResult === false) {
         return false
     }
@@ -122,9 +119,7 @@ function checkValidity(identifier) {
 
 $(document).ready(function () {
 $("#run").on("click", function () {
-    console.log("running")
     const pipeline = filtersToPipeline();
-    console.log(pipeline);
     const result = filter(elements, pipeline)
     console.log(result)
 });
