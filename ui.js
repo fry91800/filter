@@ -6,7 +6,7 @@ $(document).ready(function () {
         return `
     <div id="filter-wrapper${identifier}" class="filter-wrapper valid">
         <div id="delete-filter${identifier}" class="delete-filter hidden" data-target="filter-wrapper${identifier}">
-            X
+            &times;
         </div>
         <div id ="filter-name${identifier}" class="filter-name">
             <span class="text">New filter</span>
@@ -19,7 +19,7 @@ $(document).ready(function () {
     function deleteEvalElementMaker(identifier, filterIdentifier) {
         return `
                 <div id="delete-eval-element${identifier}" class="delete-eval-element hidden" data-target="eval-element${identifier}" data-filter-id="${filterIdentifier}">
-                   X
+                   &times;
                 </div>`
     }
     function refreshFilterValidity(identifier) {

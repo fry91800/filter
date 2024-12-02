@@ -9,19 +9,21 @@ html,
 body {
     height: 100%;
     margin: 0;
+    background-color: #e7e7e7;
 }
 
 .hidden {
-    display: none!important;
+    display: none !important;
 }
 
 .button {
+    margin:5px;
     border-radius: 3px;
     font-size: 30px;
     background-color: rgb(211, 211, 211);
     width: fit-content;
     height: fit-content;
-    padding: 5px;
+    padding: 2px 5px;
     cursor: pointer;
     transition: 0.3s;
     box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.233);
@@ -30,12 +32,14 @@ body {
 .button:hover {
     background-color: rgb(179, 179, 179);
 }
-.delete-eval-element, .delete-filter{
+
+.delete-eval-element,
+.delete-filter {
     background-color: rgb(255, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 100px;
+    border-radius: 3px;
     color: white;
 }
 
@@ -43,7 +47,7 @@ body {
 /* Main bar */
 #main-bar {
     width: 100%;
-    height: 40px;
+    height: 30px;
     background: rgb(241, 84, 34);
     background: linear-gradient(180deg, rgba(241, 84, 34, 1) 0%, rgba(182, 61, 22, 1) 100%);
     border-bottom: 1px solid black;
@@ -52,7 +56,6 @@ body {
 /* App layout */
 #app {
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: row;
 }
@@ -68,8 +71,11 @@ body {
 }
 
 #items {
+    margin: 5px;
     width: 20%;
-    border-right: 1px solid rgb(216, 216, 216);
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(161, 161, 161);
 }
 
 #items-list {
@@ -90,7 +96,7 @@ body {
     margin-bottom: 5px;
     border-radius: 5px;
     background-color: rgb(211, 211, 211);
-    width: 300px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -137,7 +143,11 @@ body {
     flex-wrap: wrap;
 }
 
-#filter-panel{
+#filter-panel {
+    background-color: white;
+    margin:5px;
+    border-radius: 10px;
+    border: 1px solid grey;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -149,7 +159,7 @@ body {
     text-align: center;
 }
 
-#filters{
+#filters {
     width: 100%;
     min-height: 190px;
 }
@@ -182,6 +192,7 @@ body {
     align-items: center;
     height: fit-content;
     width: fit-content;
+    border: 2px solid red;
 }
 
 .filter-wrapper.valid {
@@ -224,7 +235,20 @@ body {
 
 /* Results */
 #results {
-    background-color: brown;
+    margin:5px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(161, 161, 161);
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#output{
+    background-color: rgb(172, 103, 0);
+    width:100%;
+    min-height: 300px;
 }
