@@ -117,10 +117,23 @@ function checkValidity(identifier) {
     return true
 }
 
+function makeResultElement(data){
+    let res = `<div class="result-element">`;
+    for (const key in data){
+        res = res + `<div class="result-line"><strong>${key}:</strong> ${data[key]}</div>`;
+    }
+    res = res + '</div>'
+    return res;
+}
+
 $(document).ready(function () {
 $("#run").on("click", function () {
     const pipeline = filtersToPipeline();
     const result = filter(elements, pipeline)
-    console.log(result)
+    $("#output").empty();
+    for (elt of result){
+        console.log(elt)
+        $("#output").append(makeResultElement(elt))
+    }
 });
 });
